@@ -10,12 +10,14 @@ Flask==3.0.3
 Flask-OAuthlib==0.9.6
 google-auth==2.35.0
 google-auth-oauthlib==1.2.1
+gunicorn==23.0.0
 idna==3.10
 itsdangerous==2.2.0
 Jinja2==3.1.4
 MarkupSafe==2.1.5
 msgpack==1.1.0
 oauthlib==2.1.0
+packaging==24.2
 pyasn1==0.6.1
 pyasn1_modules==0.4.1
 pymongo==4.10.1

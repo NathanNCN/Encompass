@@ -34,6 +34,8 @@ function setTotalTime(){
         title.innerHTML = 'WORK'
         currentInterval += 0.5
 
+        isBreak = true;
+
     } else {
 
         // change total time equal to inputted break time
@@ -42,6 +44,9 @@ function setTotalTime(){
         //update break interval
         title.innerHTML = 'BREAK'
         currentInterval += 0.5
+
+        isBreak = false;
+
     }
 
     
@@ -156,4 +161,6 @@ function startCounter(){
 }
 
 start.addEventListener("click", startCounter);
+
+
 

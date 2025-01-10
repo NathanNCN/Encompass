@@ -71,7 +71,6 @@ function updateCounter() {
         //  if timer has ended, change time = true and break=true
         if (totalTime == 0){
             changeTime = true;
-            isBreak = true;
         }
 
         // if time is less than 10, add 0 to format
@@ -109,6 +108,8 @@ function endCounter(){
     // rest time and title
     display.innerHTML = "00:00";
     title.innerHTML = "TIMER";
+
+    isBreak = false
 
 
 }
@@ -161,6 +162,8 @@ function startCounter(){
 }
 
 start.addEventListener("click", startCounter);
+
+
 
 
 

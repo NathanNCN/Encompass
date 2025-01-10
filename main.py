@@ -35,7 +35,7 @@ app.secret_key = os.getenv('app.secret_key')
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
-client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "/Users/nathanchau-nguyen/MajorProjectEncompass/client_secret.json")
+client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "secrets/client_secret.json")
 flow = Flow.from_client_secrets_file(client_secrets_file=client_secrets_file,
                                      scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
                                      redirect_uri = 'http://127.0.0.1:5000/callback')

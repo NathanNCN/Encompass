@@ -38,7 +38,7 @@ GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "/etc/secrets/client_secret.json")
 flow = Flow.from_client_secrets_file(client_secrets_file=client_secrets_file,
                                      scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
-                                     redirect_uri = 'http://127.0.0.1:5000/callback')
+                                     redirect_uri = os.getenv('callBack'))
 
 
 ## app route to login page

@@ -3,8 +3,10 @@ CacheControl==0.14.0
 cachelib==0.13.0
 cachetools==5.5.0
 certifi==2024.8.30
+cffi==1.17.1
 charset-normalizer==3.4.0
 click==8.1.7
+cryptography==44.0.0
 dnspython==2.7.0
 Flask==3.0.3
 Flask-OAuthlib==0.9.6
@@ -18,9 +20,12 @@ MarkupSafe==2.1.5
 msgpack==1.1.0
 oauthlib==2.1.0
 packaging==24.2
+pi==0.1.2
 pyasn1==0.6.1
 pyasn1_modules==0.4.1
+pycparser==2.22
 pymongo==4.10.1
+pyOpenSSL==24.3.0
 python-dotenv==1.0.1
 requests==2.32.3
 requests-oauthlib==1.1.0

@@ -315,4 +315,4 @@ def dateSorter(listOfDates):
     return sorted(listOfDates, key=lambda x: datetime.strptime(x[0], "%Y-%m-%d"))
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True,hosts= "0.0.0.0", port=5000)

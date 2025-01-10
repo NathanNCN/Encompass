@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards</title>
+    <link rel="icon" type="image/x-icon" href="static/images/compass.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/style.css"/>
+    <meta>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+              <a href="{{url_for('home')}}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <img src="static/images/compass.svg" height="30px"/>
+                <span class="fs-4">Encompass</span>
+              </a>
+
+              <ul class="nav nav-pills">
+                <li class="nav-item"><a href="{{url_for('flashLibrary')}}" class="nav-link">Back</a></li>
+              </ul>
+            </header>
+        </div>
+    </nav>
+
+    <!--flash card section-->
+    <form class="container" id="input-container" action="{{url_for('createNewSet')}}" METHOD="POST">
+        <div class="row">
+            <input class="col-4 offset-4 form-control-lg text-center align-self-center " name="setname" type="text" placeholder="Set Name" required>
+        </div>
+        {% for i in range(5) %}
+        <div id='div-input' class="row mt-4 justify-content-around">
+            <input class="col-5 form-control-lg text-center ml-5" type="text" name = '{{"Term" ~ i}}' placeholder="Term" required>
+            <input class="col-5 form-control-lg text-center mr-5" type="text"name = '{{"Definition" ~ i}}' placeholder="Definition" required>
+        </div>
+        {% endfor %}
+        <div id="button-row" class="row justify-content-around mt-5">
+            <button type="button" class="col-3 btn btn-info btn-lg" id="add-card">Add Card</button>
+            <button type="button" class="col-3 btn btn-danger btn-lg" id="remove-card">Remove Card</button>
+            <button type="submit" class="col-3 btn btn-success btn-lg">Create Set</button>
+        </div>
+    </form>
+
+    <script src="static/flashcard.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <link rel="icon" type="image/x-icon" href="static/images/compass.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/style.css"/>
+    <meta>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+              <a href="{{url_for('home')}}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <img src="static/images/compass.svg" height="30px"/>
+                <span class="fs-4">Encompass</span>
+              </a>
+        
+              <ul class="nav nav-pills">
+                <li class="nav-item"><a href="{{url_for('home')}}" class="nav-link">Home</a></li>
+              </ul>
+            </header>
+        </div>
+    </nav>
+
+    <!--flash card section-->
+    <section>
+        <div class="container px-4 py-5" id="custom-cards">
+            <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+            {% for name in data%}
+              <div class="col">
+                <form class="card card-cover h-100 overflow-hidden text-bg-primary rounded-4 shadow-lg" method="Post" action="/card">
+                  <button type="submit"
+                          class="btn btn-primary"
+                          style="height:200px;"
+                          name="{{name}}">
+                      <h3 class="py-3 mt-4 mb-4 display-6 lh-1 fw-bold text-center">{{name}}</h3>
+                  </button>
+                  <button class="btn btn-danger" name="{{name + 'RemoveThisSet#$#_129Kqaoe_982AmcAA1((**//10'}}">Remove Set</button>
+                </form>
+
+
+              </div>
+            {% endfor %}
+                <div class="col">
+                <div class="card card-cover h-100 overflow-hidden text-bg-primary rounded-4 shadow-lg " >
+                  <a href="{{url_for('createNewSet')}}" type="button" class="btn btn-primary" style="height:200px;"><h3 class="py-3 mt-4 mb-4 display-6 lh-1 fw-bold text-center">Create New Set</h3></a>
+                </div>
+              </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

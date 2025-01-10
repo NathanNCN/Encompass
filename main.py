@@ -20,7 +20,8 @@ load_dotenv()
 
 
 ## Load and connect to MongoDB
-client = MongoClient("mongodb://localhost:27017")
+mongo_uri = os.getenv("MONGO_URI")
+client = MongoClient(mongo_uri)
 db = client["Encompass"]
 user_db = db["Users"]
 flash_library_db = db["Flashcards"]

@@ -2,6 +2,7 @@
 ## Table of Content
 ### - [Features](#features)
 ### - [Installation](#Installation)
+### - [Demo](#Demo)
 ### - [Usage](#Usage)
 
 ## Features

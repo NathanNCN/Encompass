@@ -36,7 +36,10 @@
 - Steps:
   - Clone repository 
   - Create a MongoDB and replace unique keys and information with your own
-  - Run application 
+  - Run application
+    
+## Demo
+- To few a demo of Encompass: https://youtu.be/czEhIUwzdOs
 
 ## Usage
 - Created to inspire and promote productivity. An application with multiple tools to remove the hassle of swapping between services. An app created for all ages looking for a central app to boost productivity

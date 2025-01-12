@@ -40,7 +40,7 @@
   - Run application
     
 ## Demo
-- To few a demo of Encompass: https://youtu.be/FbfhiUuBTio
+- To view a demo of Encompass: https://youtu.be/FbfhiUuBTio
 
 ## Usage
 - Created to inspire and promote productivity. An application with multiple tools to remove the hassle of swapping between services. An app created for all ages looking for a central app to boost productivity

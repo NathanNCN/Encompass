@@ -26,10 +26,10 @@ db = client["Encompass"]
 user_db = db["Users"]
 flash_library_db = db["Flashcards"]
 goals_db = db["Goals"]
-calender_db = db["Calender"]
+calendar_db = db["calendar"]
 
 
-## Flask setup and google authentication
+## Flask setup and Google authentication
 app = Flask(__name__)
 app.secret_key = os.getenv('app.secret_key')
 
@@ -42,7 +42,7 @@ flow = Flow.from_client_secrets_file(client_secrets_file=client_secrets_file,
                                      redirect_uri = os.getenv('callBack'))
 
 
-## app route to login page
+## App route to login page
 @app.route('/')
 def index():
     return render_template('login.html')
@@ -50,16 +50,16 @@ def index():
 @app.route('/login')
 def login():
 
-    ## create url to application and save state
+    ## Create url to application and save state
     authorization_url, state = flow.authorization_url()
     session['state'] = state
     return redirect(authorization_url)
 @app.route('/callback')
 def callback():
-    ## collect current state
+    ## Collect current state
     flow.fetch_token(authorization_response = request.url)\
 
-    ##determine if the user has logged in
+    ## Determine if the user has logged in
     if not session['state'] == request.args['state']:
         abort(500)
 
@@ -78,7 +78,7 @@ def callback():
     user_name = id_info.get('name')
     user_email = id_info.get('email')
 
-    ## Create a new log in user_db if user is not found in user_db
+    ## Create a new login user_db if user is not found in user_db
     if user_db.find_one({"Name": user_name, "Email": user_email}) is None:
         user_db.insert_one({"Name": user_name, "Email": user_email})
 
@@ -88,7 +88,7 @@ def callback():
     session['name'] = id_info.get('name')
     session["email"] = id_info.get('email')
 
-    ## redirect to home
+    ## Redirect to home
     return redirect("/home")
 
 
@@ -102,7 +102,7 @@ def home():
 def timer():
     return render_template("timer.html")
 
-## page flashLibrary
+## page flash library
 @app.route('/flash-library')
 def flashLibrary():
 
@@ -120,16 +120,16 @@ def flashLibrary():
 @app.route('/create-new-set', methods=['Post', 'Get'])
 def createNewSet():
 
-    ## check if method was post
+    ## Check if method was post
     if request.method == 'POST':
 
-        ## Collect request from data and convert into variables
+        ## Collect requests from data and convert them into variables
         values = list(request.form)
         title = request.form[values[0]]
         keys = values[1:]
         dict_of_values = {}
 
-        ## loop through request form collecting input term and defintion
+        ## loop through request form collecting input term and definition
         for i in range(0, len(keys), 2):
             if i+1 < len(keys):
                 term = request.form[keys[i]]
@@ -138,7 +138,7 @@ def createNewSet():
                 ## add term and definition to dict_of_values
                 dict_of_values[term] = definition
 
-        ## Update flashcard database with users new flashcard set
+        ## Update flashcard database with users' new flashcard set
         flash_library_db.insert_one({
             "Email": session['email'],
             "Set_Name": title,
@@ -153,27 +153,27 @@ def createNewSet():
 @app.route('/card', methods = ["Post", "Get"])
 def card():
 
-    ## check if request was a post
+    ## Check if the request was a post
     if request.method == "POST":
         
-        ## determine if secret key is in request form
+        ## Determine if the secret key is in the request form
         if "RemoveThisSet#$#_129Kqaoe_982AmcAA1((**//10" in list(request.form.keys())[0]:
             
-            ## remove set from flashcard database
+            ## Remove set from flashcard database
             flash_library_db.delete_one(
                 {"Email": session['email'],
                  
-                 ## removes secret key from request form
+                 ## Removes the secret key from the request form
                  "Set_Name": list(request.form.keys())[0].replace("RemoveThisSet#$#_129Kqaoe_982AmcAA1((**//10", "")})
             return redirect("/flash-library")
         else:
-            ## collect the current flashcart set
+            ## Collect the current flashcard set
             session["flashcard_set"] = list(request.form.keys())[0]
             
-            ## collect a random pair 
+            ## Collect a random pair 
             term = getRandomTerm()
             
-            ## open html file with the random pair
+            ## Open html file with the random pair
             return render_template("card.html", data=term)
 
     else:
@@ -181,7 +181,7 @@ def card():
 
 def getRandomTerm():
     
-    ## collect current flashcard set's terms and definition pairs 
+    ## Collect current flashcard set's terms and definition pairs 
     terms = flash_library_db.find_one({"Email": session["email"],
                                        "Set_Name": session["flashcard_set"]})["Terms"]
     ## get list of keys and select a random one
@@ -195,51 +195,51 @@ def getRandomTerm():
 @app.route('/goalsetter', methods = ["POST", "GET"])
 def GoalSetter():
     
-    ## check if request was a poset
+    ## Check if request was a post
     if request.method == "POST":
         
-        ## collect goal that was inputted 
+        ## Collect goal that was inputted 
         goal = request.form["value"]
         
-        ## update goals database with new goal  
+        ## Update the goals database with a new goal  
         goals_db.update_one(
             {"Email": session["email"]},
             {"$push": {"Goals": goal}},
             upsert=True
         )
         
-        ## load newly updated database
+        ## Load newly updated database
         goals = goals_db.find_one({"Email": session["email"]})["Goals"]
         
-        ## load html with new data
+        ## Load HTML with new data
         return render_template('goalSetter.html', GoalList=goals)
 
     else:
         
-        ## get user in goals database
+        ## Get user in goals database
         goals = goals_db.find_one({"Email": session["email"]})
         
-        ## check if user has created zero goals
+        ## Check if the user has created zero goals
         if goals is None:
             ## open html with no data
             return render_template('goalSetter.html', GoalList=[])
         else:
-            ## open html with data
+            ## Open HTML with data
             return render_template('goalSetter.html', GoalList = goals["Goals"])
 
 @app.route('/remove_goal', methods=["Post"])
 def removeGoal():
     
-    ## collect corresponding index of removed goal 
+    ## Collect corresponding index of removed goal 
     index = int(list(request.form.keys())[0])
 
-    ## get list of current goals
+    ## Get list of current goals
     goals = goals_db.find_one({"Email": session["email"]})["Goals"]
 
-    ## remove goal at index
+    ## Remove goal at index
     goals.pop(index)
 
-    ## update goals database
+    ## Update goals database
     goals_db.update_one(
         {"Email": session["email"]},
         {"$set": {"Goals": goals}}
@@ -247,72 +247,72 @@ def removeGoal():
     
     return redirect("/goalsetter")
 
-@app.route("/calender", methods=["Post","Get"])
-def calender():
+@app.route("/calendar", methods=["Post","Get"])
+def calendar():
 
-    ## check if request was a post
+    ## Check if the request was a post
     if request.method=="POST":
 
-        ## collect information
+        ## Collect information
         values = request.form
         keys = list(request.form.keys())
 
-        ## Update calender database
-        calender_db.update_one(
+        ## Update calendar database
+        calendar.update_one(
             {"Email": session["email"]},
             {"$push": {"task": [values[keys[0]], values[keys[1]]]}},
             upsert=True
         )
 
-        ## sort the task in database by date
-        sorted_task = dateSorter(calender_db.find_one({"Email": session['email']})["task"])
+        ## Sort the task in the database by date
+        sorted_task = dateSorter(calendar_db.find_one({"Email": session['email']})["task"])
 
-        ## update data base with sorted task
-        calender_db.update_one(
+        ## Update database with sorted task
+        calendar_db.update_one(
             {"Email": session["email"]},
             {"$set": {"task": sorted_task}},
         )
 
-        ## collect task and render html
-        tasks = calender_db.find_one({"Email": session["email"]})["task"]
-        return render_template('calender.html', tasks=tasks)
+        ## Collect task and render html
+        tasks = calendar_db.find_one({"Email": session["email"]})["task"]
+        return render_template('calendar.html', tasks=tasks)
     else:
 
-        ## collect task
-        tasks = calender_db.find_one({"Email": session["email"]})
+        ## Collect task
+        tasks = calendar_db.find_one({"Email": session["email"]})
 
-        ##check if user has zero task
+        ## Check if the user has zero tasks
         if tasks is None:
-            return render_template('calender.html', tasks=[])
+            return render_template('calendar.html', tasks=[])
 
         else:
-            return render_template('calender.html', tasks=tasks["task"])
+            return render_template('calendar.html', tasks=tasks["task"])
 
 @app.route('/remove_task', methods=["Post"])
 def removeTask():
 
-    ## collect index of task
+    ## Collect index of task
     index = int(list(request.form.keys())[0])
-    new_tasks = calender_db.find_one({"Email": session["email"]})["task"]
+    new_tasks = calendar_db.find_one({"Email": session["email"]})["task"]
 
-    ## pop item at index off calender database
+    ## Pop item at index off calendar database
     new_tasks.pop(index)
 
-    ## update calender database
-    calender_db.update_one(
+    ## Update calendar database
+    calendar_db.update_one(
         {"Email": session["email"]},
         {"$set": {"task": new_tasks}}
     )
 
-    return redirect("/calender")
+    return redirect("/calendar")
 
 
 
 def dateSorter(listOfDates):
 
-    ## loop through the list of dates
-    ## convert data into correct format
-    ## then sort by date
+    ## Loop through the list of dates
+    ## Convert data into the correct format
+    ## Then sort by date
     return sorted(listOfDates, key=lambda x: datetime.strptime(x[0], "%Y-%m-%d"))
 
 if __name__ == "__main__":

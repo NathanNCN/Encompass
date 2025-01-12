@@ -10,8 +10,10 @@ cryptography==44.0.0
 dnspython==2.7.0
 Flask==3.0.3
 Flask-OAuthlib==0.9.6
+gevent==24.11.1
 google-auth==2.35.0
 google-auth-oauthlib==1.2.1
+greenlet==3.1.1
 gunicorn==23.0.0
 idna==3.10
 itsdangerous==2.2.0
@@ -30,6 +32,9 @@ python-dotenv==1.0.1
 requests==2.32.3
 requests-oauthlib==1.1.0
 rsa==4.9
+setuptools==75.8.0
 urllib3==2.2.3
 Werkzeug==3.0.4
+zope.event==5.0
+zope.interface==7.2
 

@@ -1,7 +1,6 @@
 # Encompass
 ## Table of Content
 ### - [Features](#features)
-### - [Mock Test](#Mock Test)
 ### - [Installation](#Installation)
 ### - [Usage](#Usage)
 
@@ -31,9 +30,6 @@
 - Calendar to keep track of upcoming tasks and events
 <img src="Screenshots/calendar.png" width="500">
 <img src="Screenshots/calendarCreate.png" width="500">
-
-## Mock Test
-- To try out the application: 
 
 ## Installation
 - Feel free to install Encompass. Welcome  to any testing, adjustments or updates to the project. 

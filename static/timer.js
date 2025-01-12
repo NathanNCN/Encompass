@@ -1,4 +1,4 @@
-// declare variables
+// Declare variables
 let changeTime;
 let isBreak;
 
@@ -10,7 +10,7 @@ let workMinutes;
 let totalTime;
 let intervalStarter;
 
-// variables of tags in html file
+// Variables of tags in HTML file
 const display = document.getElementById('countdown');
 const start = document.getElementById('start');
 const title = document.getElementById('indicator');
@@ -24,13 +24,13 @@ const intervalForm = document.getElementById("interval")
 
 function setTotalTime(){
 
-    // check if isbreak false
+    // Check if isbreak false
     if (isBreak == false){
 
-        // change total time equal to inputted work time
+        // Change total time equal to inputted work time
         totalTime = workMinutes*60;
 
-        //update html title
+        // Update html title
         title.innerHTML = 'WORK'
         currentInterval += 0.5
 
@@ -38,10 +38,10 @@ function setTotalTime(){
 
     } else {
 
-        // change total time equal to inputted break time
+        // Change total time equal to inputted break time
         totalTime = breakMinutes*60;
 
-        //update break interval
+        // Update break interval
         title.innerHTML = 'BREAK'
         currentInterval += 0.5
 
@@ -55,25 +55,25 @@ function setTotalTime(){
 function updateCounter() {
 
 
-    // check if current interval is less than number of interval requested
+    //Check if the current interval is less than the number of intervals requested
     if (currentInterval < numberOfIntervals){
 
-        // if change time is true change time
+        //If change time is true change time
         if (changeTime == true){
             setTotalTime();
             changeTime = false;
         }
 
-        //  collect current time
+        //  Collect current time
         let currentMinutes = Math.floor(totalTime/60);
         let seconds = totalTime%60;
 
-        //  if timer has ended, change time = true and break=true
+        //  If timer has ended, change time = true and break=true
         if (totalTime == 0){
             changeTime = true;
         }
 
-        // if time is less than 10, add 0 to format
+        // If time is less than 10, add 0 to format
         if (seconds < 10) {
             display.innerHTML = currentMinutes + ":0"+ seconds;
         }
@@ -82,10 +82,10 @@ function updateCounter() {
             display.innerHTML = currentMinutes + ":"+ seconds;
         }
 
-        // decrease the time by 1
+        // Decrease the time by 1
         totalTime -= 1;
 
-    // else end the counter
+    // Else end the counter
     } else{
         endCounter()
     }
@@ -94,7 +94,7 @@ function updateCounter() {
 
 function endCounter(){
 
-    // change end button into start timer
+    // Change the end button to start timer
     start.innerHTML = "Start";
     start.classList.replace('btn-outline-danger', 'btn-outline-secondary');
     clearInterval(intervalStarter);
@@ -102,10 +102,10 @@ function endCounter(){
     start.removeEventListener("click", endCounter);
     start.addEventListener("click", startCounter);
 
-    // enable forms
+    // Enable forms
     formSwitch(false);
 
-    // rest time and title
+    // Rest time and title
     display.innerHTML = "00:00";
     title.innerHTML = "TIMER";
 
@@ -116,16 +116,16 @@ function endCounter(){
 
 function formSwitch(direction){
 
-    // select all forms
+    // Select all forms
     const inputs = form.querySelectorAll('input')
 
-    // if direction true, disable all inputs
+    // If direction true, disable all inputs
     if (direction == true){
         inputs.forEach(input  =>{
             input.disabled = true;
         });
 
-    // else enable inputs and rest input fields
+    // Else enable inputs and rest input fields
     } else{
 
         inputs.forEach(input  =>{
@@ -137,26 +137,26 @@ function formSwitch(direction){
 
 function startCounter(){
 
-    // initialize variables use later
+    // Initialize variables use later
     changeTime = true;
     isBreak = false;
     currentInterval = 0;
 
-    // set variables equal to inputted
+    // Set variables equal to inputted
     workMinutes = workForm.value;
     breakMinutes = breakForm.value;
     numberOfIntervals = intervalForm.value;
 
-    // disable forms
+    // Disable forms
     formSwitch(true);
 
-    // Change start button into end timer
+    // Change the start button to end timer
     start.innerHTML = "End";
     start.classList.replace('btn-outline-secondary', 'btn-outline-danger');
     start.removeEventListener("click", startCounter);
     start.addEventListener("click", endCounter);
 
-    //Run update counter every 1 second
+    // Run update counter every 1 second
     intervalStarter = setInterval(updateCounter, 1000);
      
 }
